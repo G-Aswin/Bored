@@ -110,6 +110,7 @@ public class ChooseCustomization extends AppCompatActivity implements PopupMenu.
         Intent intent = new Intent(this, MainScreen.class);
         intent.putExtra("type", type_option);
         startActivity(intent);
+        finish();
     }
 
 
@@ -124,6 +125,7 @@ public class ChooseCustomization extends AppCompatActivity implements PopupMenu.
         Intent intent = new Intent(this, MainScreen.class);
         intent.putExtra("participants", participants.toString());
         startActivity(intent);
+        finish();
     }
 
         @Override
@@ -201,12 +203,14 @@ public class ChooseCustomization extends AppCompatActivity implements PopupMenu.
             Intent intent = new Intent(this, MainScreen.class);
             intent.putExtra("cost", progress);
             startActivity(intent);
+            finish();
         }
 
         else if (progress_recipient.equals("accessibility")){
             Intent intent = new Intent(this, MainScreen.class);
             intent.putExtra("accessibility", progress);
             startActivity(intent);
+            finish();
         }
     }
 
@@ -219,6 +223,12 @@ public class ChooseCustomization extends AppCompatActivity implements PopupMenu.
         cancel.setVisibility(View.INVISIBLE);
         progress = 0.00;
         progress_recipient = "";
+    }
+
+    public void GoBackHome(View view){
+        Intent intent = new Intent(this, MainScreen.class);
+        startActivity(intent);
+        finish();
     }
 
 }

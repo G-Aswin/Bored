@@ -1,12 +1,15 @@
 package com.example.bored;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
-import android.app.VoiceInteractor;
 import android.content.Intent;
-import android.graphics.Path;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -19,12 +22,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.bottomappbar.BottomAppBar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.GenericArrayType;
 import java.text.DecimalFormat;
+import java.text.MessageFormat;
 
 public class MainScreen extends AppCompatActivity {
 
@@ -34,6 +38,7 @@ public class MainScreen extends AppCompatActivity {
     ProgressBar progressBar;
     TextView OptionsDisplay;
     Button SameOptionAgain;
+    BottomAppBar bottomAppBar;
 
     private String url;
     private String randomurl = "https://www.boredapi.com/api/activity";
@@ -51,7 +56,58 @@ public class MainScreen extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         OptionsDisplay = findViewById(R.id.options_display);
         SameOptionAgain = findViewById(R.id.same_option_again);
+        bottomAppBar = findViewById(R.id.bottom_bar);
+        setSupportActionBar(bottomAppBar);
 
+        ReceiveCustomization();
+
+        bottomAppBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.customize:
+                        StartCustomizeScreen();
+                        break;
+                    case R.id.favourites:
+                        //TODO
+                        break;
+                    default:
+                        Toast.makeText(MainScreen.this, "Didnt select anything?", Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            }
+        });
+
+    }
+
+    void LoadURL(String url){
+        progressBar.setVisibility(View.VISIBLE);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    String activityresult = response.getString("activity");
+                    Activity.setText(activityresult);
+                }
+                catch (JSONException e){
+                    progressBar.setVisibility(View.INVISIBLE);
+                    Log.e("JSON", "Error Fetching URL");
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressBar.setVisibility(View.INVISIBLE);
+                Log.e("JSON", "Volley Error", error);
+            }
+        });
+
+        requestQueue.add(request);
+    }
+
+    void ReceiveCustomization() {
         url = "https://www.boredapi.com/api/activity";
         String type = getIntent().getStringExtra("type");
 
@@ -92,34 +148,6 @@ public class MainScreen extends AppCompatActivity {
             OptionsDisplay.setText("Current activity has max accessibility set to " + df.format(acessibility*100));
             LoadURL(url);
         }
-
-    }
-
-    void LoadURL(String url){
-        progressBar.setVisibility(View.VISIBLE);
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    progressBar.setVisibility(View.INVISIBLE);
-                    String activityresult = response.getString("activity");
-                    Activity.setText(activityresult);
-                }
-                catch (JSONException e){
-                    progressBar.setVisibility(View.INVISIBLE);
-                    Log.e("JSON", "Error Fetching URL");
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                progressBar.setVisibility(View.INVISIBLE);
-                Log.e("JSON", "Volley Error", error);
-            }
-        });
-
-        requestQueue.add(request);
     }
 
     public void GenerateRandomActivity(View view) {
@@ -131,10 +159,32 @@ public class MainScreen extends AppCompatActivity {
     public void CustomizeResultsButton(View view){
         Intent intent = new Intent(this, ChooseCustomization.class);
         startActivity(intent);
+        finish();
+    }
+
+    public void StartCustomizeScreen(){
+        Intent intent = new Intent(this, ChooseCustomization.class);
+        startActivity(intent);
+        finish();
     }
 
     public void SameOptionAgain(View view){
         requestQueue = Volley.newRequestQueue(this);
         LoadURL(url);
+    }
+
+    public void LoadAnotherActivityFAB(View view){
+        requestQueue = Volley.newRequestQueue(this);
+        if (Activity.getText().toString().equals("Your Activity Will be Generated Here!"))
+            LoadURL(randomurl);
+        else
+            LoadURL(url);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.bottombarmenu, menu);
+        return true;
     }
 }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:title="Favourites"
+        android:icon="@drawable/ic_star_filled"
+        android:id="@+id/favourites"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:title="Customize"
+        android:icon="@drawable/ic_settings"
+        android:id="@+id/customize"
+        app:showAsAction="ifRoom"/>
+
+</menu>

@@ -22,5 +22,6 @@ public class MainActivity extends AppCompatActivity {
     public void StartMainScreen(View view) {
         Intent intent = new Intent(this, MainScreen.class);
         startActivity(intent);
+        finish();
     }
 }
