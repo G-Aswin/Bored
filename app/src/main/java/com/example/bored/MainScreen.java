@@ -52,10 +52,10 @@ public class MainScreen extends AppCompatActivity {
 
         Activity = findViewById(R.id.editTextTextMultiLine);
         GenerateActivity = findViewById(R.id.GetRandomActivity);
-        Customize = findViewById(R.id.CustomizeResults);
+//        Customize = findViewById(R.id.CustomizeResults);
         progressBar = findViewById(R.id.progressBar);
         OptionsDisplay = findViewById(R.id.options_display);
-        SameOptionAgain = findViewById(R.id.same_option_again);
+//        SameOptionAgain = findViewById(R.id.same_option_again);
         bottomAppBar = findViewById(R.id.bottom_bar);
         setSupportActionBar(bottomAppBar);
 
@@ -156,11 +156,11 @@ public class MainScreen extends AppCompatActivity {
         LoadURL(randomurl);
     }
 
-    public void CustomizeResultsButton(View view){
-        Intent intent = new Intent(this, ChooseCustomization.class);
-        startActivity(intent);
-        finish();
-    }
+//    public void CustomizeResultsButton(View view){
+//        Intent intent = new Intent(this, ChooseCustomization.class);
+//        startActivity(intent);
+//        finish();
+//    }
 
     public void StartCustomizeScreen(){
         Intent intent = new Intent(this, ChooseCustomization.class);
@@ -168,10 +168,10 @@ public class MainScreen extends AppCompatActivity {
         finish();
     }
 
-    public void SameOptionAgain(View view){
-        requestQueue = Volley.newRequestQueue(this);
-        LoadURL(url);
-    }
+//    public void SameOptionAgain(View view){
+//        requestQueue = Volley.newRequestQueue(this);
+//        LoadURL(url);
+//    }
 
     public void LoadAnotherActivityFAB(View view){
         requestQueue = Volley.newRequestQueue(this);
