@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/p1"
+        android:title="Alone"/>
+
+    <item android:id="@+id/p2"
+        android:title="2 People"/>
+
+    <item android:id="@+id/p3"
+        android:title="3 People"/>
+
+    <item android:id="@+id/p4"
+        android:title="4 People"/>
+
+    <item android:id="@+id/p5"
+        android:title="More than 4 People"/>
+
+</menu>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/item1"
+        android:title="Education"/>
+
+    <item android:id="@+id/item2"
+        android:title="Recreational"/>
+
+    <item android:id="@+id/item3"
+        android:title="Social"/>
+
+    <item android:id="@+id/item4"
+        android:title="DIY"/>
+
+    <item android:id="@+id/item5"
+        android:title="Charity"/>
+
+    <item android:id="@+id/item6"
+        android:title="Cooking"/>
+
+    <item android:id="@+id/item7"
+        android:title="Relaxation"/>
+
+    <item android:id="@+id/item8"
+        android:title="Music"/>
+
+    <item android:id="@+id/item9"
+        android:title="Busywork"/>
+
+</menu>
