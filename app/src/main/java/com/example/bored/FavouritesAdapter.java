@@ -1,12 +1,15 @@
 package com.example.bored;
 
+import android.content.ClipData;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -16,7 +19,6 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
     @Override
     public FavouritesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.favourites_row, parent, false);
-
         return new FavouritesViewHolder(view);
     }
 
@@ -32,6 +34,12 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.Fa
     @Override
     public int getItemCount() {
         return FavouritesList.size();
+    }
+
+    public ActivityObject getActivityandDeleteAt(int position){
+        ActivityObject activityObject =  FavouritesList.get(position);
+        FavouritesList.remove(position);
+        return activityObject;
     }
 
     public static class FavouritesViewHolder extends RecyclerView.ViewHolder{

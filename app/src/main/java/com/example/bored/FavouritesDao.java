@@ -1,6 +1,7 @@
 package com.example.bored;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Query;
 
 import java.util.List;
@@ -16,4 +17,7 @@ public interface FavouritesDao {
 
     @Query("SELECT COUNT(*) FROM favourites WHERE id = :key")
     int FindKey(int key);
+
+    @Delete
+    int DeleteFavourite(ActivityObject activityObject);
 }
