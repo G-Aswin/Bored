@@ -3,6 +3,8 @@ package com.example.bored;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.room.Database;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,11 +42,14 @@ public class MainScreen extends AppCompatActivity {
     TextView OptionsDisplay;
     Button SameOptionAgain;
     BottomAppBar bottomAppBar;
+    FloatingActionButton favouriteButton;
 
     private String url;
     private String randomurl = "https://www.boredapi.com/api/activity";
     private RequestQueue requestQueue;
     private DecimalFormat df = new DecimalFormat("0.00");
+    public static FavouritesDatabase database;
+    private int key;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +64,7 @@ public class MainScreen extends AppCompatActivity {
 //        SameOptionAgain = findViewById(R.id.same_option_again);
         bottomAppBar = findViewById(R.id.bottom_bar);
         setSupportActionBar(bottomAppBar);
+        database = Room.databaseBuilder(getApplicationContext(), FavouritesDatabase.class, "Favourites_DB").allowMainThreadQueries().build();
 
         ReceiveCustomization();
 
@@ -69,7 +76,7 @@ public class MainScreen extends AppCompatActivity {
                         StartCustomizeScreen();
                         break;
                     case R.id.favourites:
-                        //TODO
+                        StartFavouritesScreen();
                         break;
                     default:
                         Toast.makeText(MainScreen.this, "Didnt select anything?", Toast.LENGTH_SHORT).show();
@@ -88,6 +95,7 @@ public class MainScreen extends AppCompatActivity {
                 try {
                     progressBar.setVisibility(View.INVISIBLE);
                     String activityresult = response.getString("activity");
+                    key = response.getInt("key");
                     Activity.setText(activityresult);
                 }
                 catch (JSONException e){
@@ -168,6 +176,11 @@ public class MainScreen extends AppCompatActivity {
         finish();
     }
 
+    public void StartFavouritesScreen() {
+        Intent intent = new Intent(this, Favourites.class);
+        startActivity(intent);
+    }
+
 //    public void SameOptionAgain(View view){
 //        requestQueue = Volley.newRequestQueue(this);
 //        LoadURL(url);
@@ -186,5 +199,10 @@ public class MainScreen extends AppCompatActivity {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.bottombarmenu, menu);
         return true;
+    }
+
+    public void AddedToFavourites(View view){
+        database.favouritesDao().AddFavourite(key, Activity.getText().toString());
+        Toast.makeText(this, "Added to favourites", Toast.LENGTH_SHORT).show();
     }
 }
