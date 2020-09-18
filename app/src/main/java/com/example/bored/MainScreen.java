@@ -202,6 +202,11 @@ public class MainScreen extends AppCompatActivity {
     }
 
     public void AddedToFavourites(View view){
+
+        if (database.favouritesDao().FindKey(key) > 0){
+            Toast.makeText(this, "Already in Favourites!", Toast.LENGTH_SHORT).show();
+            return;
+        }
         database.favouritesDao().AddFavourite(key, Activity.getText().toString());
         Toast.makeText(this, "Added to favourites", Toast.LENGTH_SHORT).show();
     }

@@ -1,6 +1,8 @@
 package com.example.bored;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ActionBar;
 import android.os.Bundle;
@@ -14,27 +16,21 @@ import java.util.List;
 
 public class Favourites extends AppCompatActivity {
 
-    private ScrollView scrollView;
-    private TextView textView;
-    List<ActivityObject> favourites = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
+    private FavouritesAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favourites);
 
-        scrollView = findViewById(R.id.scroll_view);
-        textView = findViewById(R.id.text_view_scroll);
+        recyclerView = findViewById(R.id.recycler_view);
+        layoutManager = new LinearLayoutManager(this);
+        adapter = new FavouritesAdapter();
 
-        CreateScrollList();
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
 
-    }
-
-    private void CreateScrollList(){
-        favourites = MainScreen.database.favouritesDao().GetAllFavourites();
-        for (ActivityObject favourite: favourites){
-
-        }
-        textView.setText(favourites.get(0).activity);
     }
 }

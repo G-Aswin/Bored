@@ -13,4 +13,7 @@ public interface FavouritesDao {
 
     @Query("SELECT * FROM favourites")
     List<ActivityObject> GetAllFavourites();
+
+    @Query("SELECT COUNT(*) FROM favourites WHERE id = :key")
+    int FindKey(int key);
 }
