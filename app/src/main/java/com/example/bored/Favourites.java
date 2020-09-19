@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ActionBar;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -60,4 +61,8 @@ public class Favourites extends AppCompatActivity {
             }
         }
     };
+
+    public void GoBackHome(View view){
+        onBackPressed();
+    }
 }

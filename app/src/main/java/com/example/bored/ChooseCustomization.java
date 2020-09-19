@@ -226,9 +226,7 @@ public class ChooseCustomization extends AppCompatActivity implements PopupMenu.
     }
 
     public void GoBackHome(View view){
-        Intent intent = new Intent(this, MainScreen.class);
-        startActivity(intent);
-        finish();
+        onBackPressed();
     }
 
 }

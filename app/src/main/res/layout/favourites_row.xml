@@ -4,14 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp"
-    android:layout_margin="10dp"
+    android:layout_margin="3dp"
     android:id="@+id/favourite_row">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="15dp"
         android:id="@+id/favourite_row_entry"
         android:fontFamily="@font/open_sans"
+        android:textSize="18sp"
+        android:background="@drawable/border"
         />
 
 </LinearLayout>

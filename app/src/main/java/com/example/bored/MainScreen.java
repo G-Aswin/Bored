@@ -173,7 +173,6 @@ public class MainScreen extends AppCompatActivity {
     public void StartCustomizeScreen(){
         Intent intent = new Intent(this, ChooseCustomization.class);
         startActivity(intent);
-        finish();
     }
 
     public void StartFavouritesScreen() {
