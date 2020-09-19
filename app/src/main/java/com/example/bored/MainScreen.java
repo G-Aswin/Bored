@@ -63,6 +63,7 @@ public class MainScreen extends AppCompatActivity {
         OptionsDisplay = findViewById(R.id.options_display);
 //        SameOptionAgain = findViewById(R.id.same_option_again);
         bottomAppBar = findViewById(R.id.bottom_bar);
+        favouriteButton = findViewById(R.id.fav_button);
         setSupportActionBar(bottomAppBar);
         database = Room.databaseBuilder(getApplicationContext(), FavouritesDatabase.class, "Favourites_DB").allowMainThreadQueries().build();
 
@@ -112,6 +113,12 @@ public class MainScreen extends AppCompatActivity {
             }
         });
 
+        if (database.favouritesDao().FindKey(key) > 0){
+            favouriteButton.setImageResource(R.drawable.ic_star_filled);
+        }
+        else {
+            favouriteButton.setImageResource(R.drawable.ic_star_empty);
+        }
         requestQueue.add(request);
     }
 
@@ -215,5 +222,6 @@ public class MainScreen extends AppCompatActivity {
         }
         database.favouritesDao().AddFavourite(key, Activity.getText().toString());
         Toast.makeText(this, "Added to favourites", Toast.LENGTH_SHORT).show();
+        favouriteButton.setImageResource(R.drawable.ic_star_filled);
     }
 }
