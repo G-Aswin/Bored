@@ -138,22 +138,29 @@ public class MainScreen extends AppCompatActivity {
             LoadURL(url);
         }
 
-        Double cost = getIntent().getDoubleExtra("cost", -1.0);
+        Double min_cost = getIntent().getDoubleExtra("min_cost", -1.0);
+        Double max_cost = getIntent().getDoubleExtra("max_cost", -1.0);
 
-        if (cost != -1.0){
-            url += "?minprice=0&maxprice=" + df.format(cost);
+
+        if (min_cost != -1.0 && max_cost != -1.0){
+            url += "?minprice=" + df.format(min_cost) +"&maxprice=" + df.format(max_cost);
             requestQueue = Volley.newRequestQueue(this);
-            OptionsDisplay.setText("Current activity has max price set to " + df.format(cost*100));
+            OptionsDisplay.setText("Current activity has min price set to "
+                    + df.format(min_cost*100)
+                    + "max price set to " + df.format(max_cost*100));
             LoadURL(url);
         }
 
 
-        Double acessibility = getIntent().getDoubleExtra("accessibility", -1.0);
+        Double min_acessibility = getIntent().getDoubleExtra("min_accessibility", -1.0);
+        Double max_acessibility = getIntent().getDoubleExtra("max_accessibility", -1.0);
 
-        if (acessibility != -1.0){
-            url += "?minaccessibility=0&maxaccessibility=" + df.format(acessibility);
+
+        if (min_acessibility != -1.0 && max_acessibility != -1.0){
+            url += "?minaccessibility=" + df.format(min_acessibility) + "&maxaccessibility=" + df.format(max_acessibility);
             requestQueue = Volley.newRequestQueue(this);
-            OptionsDisplay.setText("Current activity has max accessibility set to " + df.format(acessibility*100));
+            OptionsDisplay.setText("Current activity has min accessibility set to " + df.format(min_acessibility*100)
+                    + "max accessibility set to " + df.format(max_acessibility*100));
             LoadURL(url);
         }
     }

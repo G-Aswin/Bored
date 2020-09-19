@@ -18,11 +18,14 @@ public class ChooseCustomization extends AppCompatActivity implements PopupMenu.
 
 
     private TextView instructions;
-    private SeekBar seekBar;
-    private TextView percentage;
+    private SeekBar min_range;
+    private SeekBar max_range;
+    private TextView min_percentage;
+    private TextView max_percentage;
     private Button save;
     private Button cancel;
-    private Double progress;
+    private Double min_progress = 0.00;
+    private Double max_progress = 0.00;
     private String progress_recipient;
 
     String type_selected;
@@ -33,8 +36,10 @@ public class ChooseCustomization extends AppCompatActivity implements PopupMenu.
         setContentView(R.layout.activity_choose_customization);
 
         instructions = findViewById(R.id.instruction_text_view);
-        seekBar = findViewById(R.id.appCompatSeekBar);
-        percentage = findViewById(R.id.percentage);
+        min_range = findViewById(R.id.min_range);
+        max_range = findViewById(R.id.max_range);
+        min_percentage = findViewById(R.id.min_percentage);
+        max_percentage = findViewById(R.id.max_percentage);
         save = findViewById(R.id.save_button);
         cancel = findViewById(R.id.cancel_button);
     }
@@ -143,13 +148,16 @@ public class ChooseCustomization extends AppCompatActivity implements PopupMenu.
         save.setVisibility(View.VISIBLE);
         cancel.setVisibility(View.VISIBLE);
 
-        seekBar.setVisibility(View.VISIBLE);
-        percentage.setVisibility(View.VISIBLE);
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        min_range.setVisibility(View.VISIBLE);
+        max_range.setVisibility(View.VISIBLE);
+        min_percentage.setVisibility(View.VISIBLE);
+        max_percentage.setVisibility(View.VISIBLE);
+
+        min_range.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                progress = i/1.0;
-                percentage.setText(progress.toString() + "%");
+                min_progress = i/1.0;
+                min_percentage.setText(min_progress.toString() + "%");
             }
 
             @Override
@@ -160,7 +168,26 @@ public class ChooseCustomization extends AppCompatActivity implements PopupMenu.
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 progress_recipient = "cost";
-                progress = progress /100.0;
+                min_progress = min_progress /100.0;
+            }
+        });
+
+        max_range.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                max_progress = i / 1.0;
+                max_percentage.setText(max_progress.toString() + "%");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                progress_recipient = "cost";
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                progress_recipient = "cost";
+                max_progress = max_progress / 100.0;
             }
         });
     }
@@ -174,13 +201,17 @@ public class ChooseCustomization extends AppCompatActivity implements PopupMenu.
         cancel.setVisibility(View.VISIBLE);
 
 
-        seekBar.setVisibility(View.VISIBLE);
-        percentage.setVisibility(View.VISIBLE);
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        min_range.setVisibility(View.VISIBLE);
+        max_range.setVisibility(View.VISIBLE);
+
+        min_percentage.setVisibility(View.VISIBLE);
+        max_percentage.setVisibility(View.VISIBLE);
+
+        min_range.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                progress = i/1.0;
-                percentage.setText(progress.toString() + "%");
+                min_progress = i/1.0;
+                min_percentage.setText(min_progress.toString() + "%");
             }
 
             @Override
@@ -191,7 +222,26 @@ public class ChooseCustomization extends AppCompatActivity implements PopupMenu.
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 progress_recipient = "accessibility";
-                progress = progress /100.0;
+                min_progress = min_progress /100.0;
+            }
+        });
+
+        max_range.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                max_progress = i/1.0;
+                max_percentage.setText(max_progress.toString() + "%");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                progress_recipient = "accessibility";
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                progress_recipient = "accessibility";
+                max_progress = max_progress /100.0;
             }
         });
 
@@ -199,16 +249,24 @@ public class ChooseCustomization extends AppCompatActivity implements PopupMenu.
 
 
     public void Save(View view){
+
+        if (max_progress < min_progress){
+            Toast.makeText(this, "Min range Greater than Max!!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         if (progress_recipient.equals("cost")){
             Intent intent = new Intent(this, MainScreen.class);
-            intent.putExtra("cost", progress);
+            intent.putExtra("min_cost", min_progress);
+            intent.putExtra("max_cost", max_progress);
             startActivity(intent);
             finish();
         }
 
         else if (progress_recipient.equals("accessibility")){
             Intent intent = new Intent(this, MainScreen.class);
-            intent.putExtra("accessibility", progress);
+            intent.putExtra("min_accessibility", min_progress);
+            intent.putExtra("max_accessibility", max_progress);
             startActivity(intent);
             finish();
         }
@@ -217,11 +275,12 @@ public class ChooseCustomization extends AppCompatActivity implements PopupMenu.
     public void Cancel(View view){
         Toast.makeText(this, "Cancelled!", Toast.LENGTH_SHORT).show();
         instructions.setVisibility(View.INVISIBLE);
-        seekBar.setVisibility(View.INVISIBLE);
-        percentage.setVisibility(View.INVISIBLE);
+        min_range.setVisibility(View.INVISIBLE);
+        max_range.setVisibility(View.INVISIBLE);
+        min_percentage.setVisibility(View.INVISIBLE);
+        max_percentage.setVisibility(View.INVISIBLE);
         save.setVisibility(View.INVISIBLE);
         cancel.setVisibility(View.INVISIBLE);
-        progress = 0.00;
         progress_recipient = "";
     }
 
