@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import com.android.volley.toolbox.Volley;
 
+import java.text.DecimalFormat;
+
 public class ChooseCustomization extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
 
@@ -30,6 +32,8 @@ public class ChooseCustomization extends AppCompatActivity implements PopupMenu.
     private Double min_progress = 0.00;
     private Double max_progress = 0.00;
     private String progress_recipient;
+    private DecimalFormat df = new DecimalFormat("0");
+
 
     String type_selected;
     Integer participants = -1;
@@ -165,7 +169,7 @@ public class ChooseCustomization extends AppCompatActivity implements PopupMenu.
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 min_progress = i/1.0;
-                min_percentage.setText(min_progress.toString() + "%");
+                min_percentage.setText(df.format(min_progress) + "%");
             }
 
             @Override
@@ -184,7 +188,7 @@ public class ChooseCustomization extends AppCompatActivity implements PopupMenu.
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 max_progress = i / 1.0;
-                max_percentage.setText(max_progress.toString() + "%");
+                max_percentage.setText(df.format(max_progress) + "%");
             }
 
             @Override
@@ -219,7 +223,8 @@ public class ChooseCustomization extends AppCompatActivity implements PopupMenu.
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 min_progress = i/1.0;
-                min_percentage.setText(min_progress.toString() + "%");
+
+                min_percentage.setText(df.format(min_progress) + "%");
             }
 
             @Override
@@ -238,7 +243,7 @@ public class ChooseCustomization extends AppCompatActivity implements PopupMenu.
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 max_progress = i/1.0;
-                max_percentage.setText(max_progress.toString() + "%");
+                max_percentage.setText(df.format(max_progress) + "%");
             }
 
             @Override
