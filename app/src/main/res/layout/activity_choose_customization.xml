@@ -59,6 +59,7 @@
                 android:onClick="type_menu_button"
                 android:padding="35dp"
                 android:text="Type"
+                android:backgroundTint="@color/colorAccent"
                 android:textColor="@android:color/white"
                 android:textSize="18sp"
                 app:cornerRadius="15dp" />
@@ -73,6 +74,7 @@
                 android:onClick="participants_menu_button"
                 android:padding="35dp"
                 android:text="Participants"
+                android:backgroundTint="@color/colorAccent"
                 android:textColor="@android:color/white"
                 android:textSize="18sp"
                 app:cornerRadius="15dp" />
@@ -99,6 +101,7 @@
                 android:layout_margin="15dp"
                 android:padding="35dp"
                 android:text="Cost"
+                android:backgroundTint="@color/colorAccent"
                 android:onClick="CostButton"
                 android:textColor="@android:color/white"
                 android:textSize="18sp"
@@ -113,6 +116,7 @@
                 android:layout_margin="15dp"
                 android:padding="35dp"
                 android:text="Accessibility"
+                android:backgroundTint="@color/colorAccent"
                 android:textColor="@android:color/white"
                 android:textSize="17sp"
                 app:cornerRadius="15dp"
@@ -226,16 +230,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:backgroundTint="@color/colorAccent"
+        android:backgroundTint="@color/colorPrimary"
         app:menu="@menu/bottombarmenu" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
         app:layout_anchor="@id/bottom_bar"
         android:src="@drawable/ic_clear"
         android:onClick="GoBackHome"
+        android:backgroundTint="@color/colorAccent"
         />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

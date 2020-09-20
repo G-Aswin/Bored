@@ -1,11 +1,14 @@
 package com.example.bored;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.SeekBar;
@@ -42,6 +45,11 @@ public class ChooseCustomization extends AppCompatActivity implements PopupMenu.
         max_percentage = findViewById(R.id.max_percentage);
         save = findViewById(R.id.save_button);
         cancel = findViewById(R.id.cancel_button);
+
+        Window window = ChooseCustomization.this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(ContextCompat.getColor(ChooseCustomization.this, R.color.colorPrimary));
     }
 
     public void type_menu_button(View view){

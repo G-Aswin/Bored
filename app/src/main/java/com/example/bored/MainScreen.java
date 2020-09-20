@@ -3,6 +3,7 @@ package com.example.bored;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.room.Database;
 import androidx.room.Room;
 
@@ -13,6 +14,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -55,6 +58,11 @@ public class MainScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
+
+        Window window = MainScreen.this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(ContextCompat.getColor(MainScreen.this, R.color.colorPrimary));
 
         Activity = findViewById(R.id.editTextTextMultiLine);
         GenerateActivity = findViewById(R.id.GetRandomActivity);
@@ -113,12 +121,6 @@ public class MainScreen extends AppCompatActivity {
             }
         });
 
-        if (database.favouritesDao().FindKey(key) > 0){
-            favouriteButton.setImageResource(R.drawable.ic_star_filled);
-        }
-        else {
-            favouriteButton.setImageResource(R.drawable.ic_star_empty);
-        }
         requestQueue.add(request);
     }
 
@@ -173,6 +175,7 @@ public class MainScreen extends AppCompatActivity {
     }
 
     public void GenerateRandomActivity(View view) {
+        favouriteButton.setImageResource(R.drawable.ic_star_empty);
         requestQueue = Volley.newRequestQueue(this);
         OptionsDisplay.setText("Current Activity : COMPLETELY RANDOM");
         LoadURL(randomurl);
@@ -200,6 +203,7 @@ public class MainScreen extends AppCompatActivity {
 //    }
 
     public void LoadAnotherActivityFAB(View view){
+
         requestQueue = Volley.newRequestQueue(this);
         if (Activity.getText().toString().equals("Your Activity Will be Generated Here!"))
             LoadURL(randomurl);
@@ -222,6 +226,6 @@ public class MainScreen extends AppCompatActivity {
         }
         database.favouritesDao().AddFavourite(key, Activity.getText().toString());
         Toast.makeText(this, "Added to favourites", Toast.LENGTH_SHORT).show();
-        favouriteButton.setImageResource(R.drawable.ic_star_filled);
     }
+
 }
