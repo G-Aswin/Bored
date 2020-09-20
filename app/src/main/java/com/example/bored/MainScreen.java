@@ -1,15 +1,12 @@
 package com.example.bored;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.room.Database;
 import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,16 +31,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DecimalFormat;
-import java.text.MessageFormat;
 
 public class MainScreen extends AppCompatActivity {
 
     TextView Activity;
     Button GenerateActivity;
-    Button Customize;
     ProgressBar progressBar;
     TextView OptionsDisplay;
-    Button SameOptionAgain;
     BottomAppBar bottomAppBar;
     FloatingActionButton favouriteButton;
 
@@ -66,10 +60,8 @@ public class MainScreen extends AppCompatActivity {
 
         Activity = findViewById(R.id.editTextTextMultiLine);
         GenerateActivity = findViewById(R.id.GetRandomActivity);
-//        Customize = findViewById(R.id.CustomizeResults);
         progressBar = findViewById(R.id.progressBar);
         OptionsDisplay = findViewById(R.id.options_display);
-//        SameOptionAgain = findViewById(R.id.same_option_again);
         bottomAppBar = findViewById(R.id.bottom_bar);
         favouriteButton = findViewById(R.id.fav_button);
         setSupportActionBar(bottomAppBar);
@@ -88,7 +80,7 @@ public class MainScreen extends AppCompatActivity {
                         StartFavouritesScreen();
                         break;
                     default:
-                        Toast.makeText(MainScreen.this, "Didnt select anything?", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainScreen.this, "Didn't select anything?", Toast.LENGTH_SHORT).show();
                 }
                 return true;
             }
@@ -131,7 +123,7 @@ public class MainScreen extends AppCompatActivity {
         if (type != null){
             url += "?type=" + type;
             requestQueue = Volley.newRequestQueue(this);
-            OptionsDisplay.setText("Current Activity Type : " + type.substring(0,1).toUpperCase() + type.substring(1));
+            OptionsDisplay.setText(String.format("Current Activity Type : %s%s", type.substring(0, 1).toUpperCase(), type.substring(1)));
             LoadURL(url);
         }
 
@@ -140,36 +132,33 @@ public class MainScreen extends AppCompatActivity {
         if (participants != null){
             url += "?participants=" + participants;
             requestQueue = Volley.newRequestQueue(this);
-            if (participants == "5"){
+            if (participants.equals("5")){
                 participants = "more than 4";
             }
-            OptionsDisplay.setText("Current Activity is for " + participants + " participant(s).");
+            OptionsDisplay.setText(String.format("Current Activity is for %s participant(s).", participants));
             LoadURL(url);
         }
 
-        Double min_cost = getIntent().getDoubleExtra("min_cost", -1.0);
-        Double max_cost = getIntent().getDoubleExtra("max_cost", -1.0);
+        double min_cost = getIntent().getDoubleExtra("min_cost", -1.0);
+        double max_cost = getIntent().getDoubleExtra("max_cost", -1.0);
 
 
         if (min_cost != -1.0 && max_cost != -1.0){
             url += "?minprice=" + df.format(min_cost) +"&maxprice=" + df.format(max_cost);
             requestQueue = Volley.newRequestQueue(this);
-            OptionsDisplay.setText("Current activity has min price set to "
-                    + df.format(min_cost*100)
-                    + "max price set to " + df.format(max_cost*100));
+            OptionsDisplay.setText(String.format("Current activity has min price set to %smax price set to %s", df.format(min_cost * 100), df.format(max_cost * 100)));
             LoadURL(url);
         }
 
 
-        Double min_acessibility = getIntent().getDoubleExtra("min_accessibility", -1.0);
-        Double max_acessibility = getIntent().getDoubleExtra("max_accessibility", -1.0);
+        double min_acessibility = getIntent().getDoubleExtra("min_accessibility", -1.0);
+        double max_acessibility = getIntent().getDoubleExtra("max_accessibility", -1.0);
 
 
         if (min_acessibility != -1.0 && max_acessibility != -1.0){
             url += "?minaccessibility=" + df.format(min_acessibility) + "&maxaccessibility=" + df.format(max_acessibility);
             requestQueue = Volley.newRequestQueue(this);
-            OptionsDisplay.setText("Current activity has min accessibility set to " + df.format(min_acessibility*100)
-                    + "max accessibility set to " + df.format(max_acessibility*100));
+            OptionsDisplay.setText(String.format("Current activity has min accessibility set to %smax accessibility set to %s", df.format(min_acessibility * 100), df.format(max_acessibility * 100)));
             LoadURL(url);
         }
     }
@@ -177,15 +166,10 @@ public class MainScreen extends AppCompatActivity {
     public void GenerateRandomActivity(View view) {
         favouriteButton.setImageResource(R.drawable.ic_star_empty);
         requestQueue = Volley.newRequestQueue(this);
-        OptionsDisplay.setText("Current Activity : COMPLETELY RANDOM");
+        OptionsDisplay.setText(R.string.Default_Options_Display);
         LoadURL(randomurl);
     }
 
-//    public void CustomizeResultsButton(View view){
-//        Intent intent = new Intent(this, ChooseCustomization.class);
-//        startActivity(intent);
-//        finish();
-//    }
 
     public void StartCustomizeScreen(){
         Intent intent = new Intent(this, ChooseCustomization.class);
@@ -197,10 +181,6 @@ public class MainScreen extends AppCompatActivity {
         startActivity(intent);
     }
 
-//    public void SameOptionAgain(View view){
-//        requestQueue = Volley.newRequestQueue(this);
-//        LoadURL(url);
-//    }
 
     public void LoadAnotherActivityFAB(View view){
 

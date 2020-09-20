@@ -14,9 +14,6 @@ import android.widget.PopupMenu;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.android.volley.toolbox.Volley;
-
 import java.text.DecimalFormat;
 
 public class ChooseCustomization extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
@@ -154,7 +151,7 @@ public class ChooseCustomization extends AppCompatActivity implements PopupMenu.
 
 
     public void CostButton(View view){
-        instructions.setText("Slide around to set the cost. 0 is free and 100 is spending a bit ;)");
+        instructions.setText(R.string.cost_slider_desc);
         progress_recipient = "cost";
         instructions.setVisibility(View.VISIBLE);
         save.setVisibility(View.VISIBLE);
@@ -169,7 +166,7 @@ public class ChooseCustomization extends AppCompatActivity implements PopupMenu.
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 min_progress = i/1.0;
-                min_percentage.setText(df.format(min_progress) + "%");
+                min_percentage.setText(String.format("%s%%", df.format(min_progress)));
             }
 
             @Override
@@ -188,7 +185,7 @@ public class ChooseCustomization extends AppCompatActivity implements PopupMenu.
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 max_progress = i / 1.0;
-                max_percentage.setText(df.format(max_progress) + "%");
+                max_percentage.setText(String.format("%s%%", df.format(max_progress)));
             }
 
             @Override
@@ -206,7 +203,7 @@ public class ChooseCustomization extends AppCompatActivity implements PopupMenu.
 
 
     public void AccessibilityButton(View view){
-        instructions.setText("Slide around to choose accessibility of that activity. 0 is easily available and 100 not so much.");
+        instructions.setText(R.string.access_slider_desc);
         progress_recipient = "accessibility";
         instructions.setVisibility(View.VISIBLE);
         save.setVisibility(View.VISIBLE);
@@ -224,7 +221,7 @@ public class ChooseCustomization extends AppCompatActivity implements PopupMenu.
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 min_progress = i/1.0;
 
-                min_percentage.setText(df.format(min_progress) + "%");
+                min_percentage.setText(String.format("%s%%", df.format(min_progress)));
             }
 
             @Override
@@ -243,7 +240,7 @@ public class ChooseCustomization extends AppCompatActivity implements PopupMenu.
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 max_progress = i/1.0;
-                max_percentage.setText(df.format(max_progress) + "%");
+                max_percentage.setText(String.format("%s%%", df.format(max_progress)));
             }
 
             @Override

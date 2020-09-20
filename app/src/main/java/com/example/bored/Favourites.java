@@ -7,23 +7,13 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.ActionBar;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Favourites extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private RecyclerView.LayoutManager layoutManager;
     private FavouritesAdapter adapter;
 
     @Override
@@ -36,8 +26,8 @@ public class Favourites extends AppCompatActivity {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(ContextCompat.getColor(Favourites.this, R.color.colorPrimary));
 
-        recyclerView = findViewById(R.id.recycler_view);
-        layoutManager = new LinearLayoutManager(this);
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         adapter = new FavouritesAdapter();
 
         recyclerView.setLayoutManager(layoutManager);
@@ -62,7 +52,7 @@ public class Favourites extends AppCompatActivity {
             switch (direction){
                 case ItemTouchHelper.LEFT:
                 case ItemTouchHelper.RIGHT:
-                    MainScreen.database.favouritesDao().DeleteFavourite(adapter.getActivityandDeleteAt(position));
+                    MainScreen.database.favouritesDao().DeleteFavourite(adapter.getActivityDeleteAt(position));
                     adapter.notifyItemRemoved(position);
                     adapter.notifyDataSetChanged();
                     break;
