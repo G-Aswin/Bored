@@ -16,7 +16,7 @@ Depending on the url that I send, it gives me back an appropriate data which I t
 
 ### Downloading the app
 
-There is a folder in the repository called `APK`. Feel free to download the apk and install it on your device to test it.
+There should be a file in root called `Bored.apk`. Feel free to download the apk and install it on your device to test it.
 Also feel free to fork the repo and import it to your own android studio if you wanna tweak around in it.
 
 ### Some screenshots
